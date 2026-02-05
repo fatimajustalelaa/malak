@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>عيد ميلاد سعيد 🎂</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Tahoma, Arial;
+  background: #f5efe6;
+  color: #4a3427;
+  direction: rtl;
+  overflow: hidden;
+}
+
+/* صفحات */
+.page {
+  display: none;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.page.active {
+  display: block;
+}
+
+/* شخصيات فيديو */
+.character {
+  position: absolute;
+  bottom: 40px;
+  transition: 1s;
+  width: 180px;
+}
+
+.cat {
+  left: 15%;
+  animation: sway 3s ease-in-out infinite;
+}
+
+.you {
+  right: 15%;
+  animation: hop 2.2s ease-in-out infinite;
+}
+
+.cake {
+  width: 260px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  z-index: 3;
+  transition: 1.2s;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+/* نص */
+.bubble {
+  background: #fff;
+  border-radius: 20px;
+  padding: 18px;
+  max-width: 500px;
+  margin: 40px auto;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* زر */
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #c8a27c;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* حركات */
+@keyframes sway {
+  0% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+  100% { transform: rotate(-2deg); }
+}
+
+@keyframes hop {
+  0% { transform: translateY(0); }
+  30% { transform: translateY(-12px); }
+  60% { transform: translateY(0); }
+  100% { transform: translateY(0); }
+}
+
+/* بلالين */
+.balloon {
+  position: absolute;
+  bottom: -150px;
+  width: 90px;
+  animation: rise linear infinite;
+}
+
+@keyframes rise {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- صفحة 1 -->
+<div class="page active" id="page1"> 
+<img src="cat.png" class="cake" id="cake">
+  <div class="bubble">
+   ولجج شتسويينن هناا روحيي روحييي !
+  </div>
+ <button onclick="startCharacterSounds(); nextPage();">ماا روح</button>
+
+</div>
+
+<!-- صفحة 2 -->
+<div class="page" id="page2">
+  <video src="cat.webm" class="character cat" autoplay loop muted></video>
+  <video src="you.webm" class="character you" autoplay loop muted></video>
+  <div class="bubble">
+    🐱: ترا شاافتنهه ولجج
+    <br>
+    👤: ءءء عادييي ملاك سوي روحج مشفتييي !🤫
+  </div>
+  <button onclick="nextPage()">تمام</button>
+</div>
+
+<!-- صفحة 3 -->
+<div class="page" id="page3">
+  <video src="cat.webm" class="character cat hidden" autoplay loop muted id="hideCat"></video>
+  <video src="you.webm" class="character you hidden" autoplay loop muted id="hideYou"></video>
+  <img src="cake.png" class="cake" id="cake">
+  <div class="bubble">
+    انفخييي الشمعه 
+  </div>
+  <button onclick="reveal()">نفخت </button>
+</div>
+
+<!-- صفحة 4 -->
+<div class="page" id="page4">
+  <div class="bubble">
+    حجييي ابداعيي وهيج بعدين افكر بيه 
+  </div>
+</div>
+
+
+<audio id="hopSound" src="3.mp3" preload="auto"></audio>
+<audio id="catSound" src="2.mp3" preload="auto"></audio>
+<audio id="partySound" src="1.mp3" preload="auto"></audio>
+
+
+<script>
+let current = 1;
+
+function nextPage() {
+  document.getElementById("page" + current).classList.remove("active");
+  current++;
+  document.getElementById("page" + current).classList.add("active");
+}
+
+function reveal() {
+  const cake = document.getElementById("cake");
+  document.getElementById("hideCat").classList.remove("hidden");
+  document.getElementById("hideYou").classList.remove("hidden");
+  cake.style.bottom = "-300px";
+
+  setTimeout(() => {
+    nextPage();
+    launchBalloons();
+  }, 1200);
+}
+
+function launchBalloons() {
+  for (let i = 0; i < 8; i++) {
+    let b = document.createElement("img");
+    b.src = "bb.png";
+    b.className = "balloon";
+    b.style.left = Math.random() * 90 + "vw";
+    b.style.animationDuration = (8 + Math.random() * 5) + "s";
+    b.style.animationDelay = (Math.random() * 5) + "s";
+    document.body.appendChild(b);
+  }
+}
+
+function startCharacterSounds() {
+  const hop = document.getElementById("hopSound");
+  const cat = document.getElementById("catSound");
+
+  hop.loop = true;
+  cat.loop = true;
+
+  // تشغل الأصوات بعد تفاعل المستخدم (مثلا الضغط على زر "كملي")
+  hop.play();
+  cat.play();
+}
+
+function stopCharacterSounds() {
+  document.getElementById("hopSound").pause();
+  document.getElementById("catSound").pause();
+  document.getElementById("hopSound").currentTime = 0;
+  document.getElementById("catSound").currentTime = 0;
+}
+
+function reveal() {
+  // إظهار الشخصيات + تحريك الكيك
+  const cake = document.getElementById("cake");
+  document.getElementById("hideCat").classList.remove("hidden");
+  document.getElementById("hideYou").classList.remove("hidden");
+  cake.style.bottom = "-300px";
+
+  // توقف أصوات you و cat
+  stopCharacterSounds();
+
+  // تشغيل صوت الاحتفال مرة واحدة
+  const party = document.getElementById("partySound");
+  party.play();
+
+  setTimeout(() => {
+    nextPage();
+    launchBalloons();
+  }, 1200);
+}
+
+
+</script>
+
+</body>
+</html>
