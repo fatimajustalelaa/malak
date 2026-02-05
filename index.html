@@ -57,7 +57,10 @@ body {
 
 .hidden {
   opacity: 0;
+  transform: translateY(30px); /* مكان البداية للي يطفرون منه */
+  transition: opacity 1.2s ease, transform 1.2s ease;
 }
+
 
 /* نص */
 .bubble {
@@ -232,9 +235,37 @@ function reveal() {
   }, 1200);
 }
 
+function reveal() {
+  const cake = document.getElementById("cake");
+  const cat = document.getElementById("hideCat");
+  const you = document.getElementById("hideYou");
+
+  // تحريك الكيك لأسفل شوي
+  cake.style.bottom = "-300px";
+
+  // إظهار الشخصيات تدريجيًا
+  setTimeout(() => {
+    cat.classList.remove("hidden");
+    you.classList.remove("hidden");
+    
+    // Optional: تضيف حركة hop أو sway
+    cat.style.transform = "translateY(0px)";
+    you.style.transform = "translateY(0px)";
+  }, 300); // تأخير بسيط قبل الظهور
+
+  // تشغيل صوت الاحتفال مرة واحدة
+  document.getElementById("partySound").play();
+
+  // بعد مدة معينة يظلوا ظاهرين قبل الانتقال للصفحة التالية
+  setTimeout(() => {
+    nextPage();
+    launchBalloons();
+  }, 2500); // 2.5 ثانية تقريبًا
+}
 
 </script>
 
 </body>
 </html>
+
 
