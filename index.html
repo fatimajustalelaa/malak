@@ -163,6 +163,7 @@ button {
 <audio id="partySound" src="1.mp3" preload="auto"></audio>
 
 
+
 <script>
 let current = 1;
 
@@ -263,9 +264,61 @@ function reveal() {
   }, 2500); // 2.5 ثانية تقريبًا
 }
 
+function startCharacterSounds() {
+  const hop = document.getElementById("hopSound");
+  const cat = document.getElementById("catSound");
+
+  hop.loop = true;
+  cat.loop = true;
+
+  hop.play();
+  cat.play();
+}
+
+  function stopCharacterSounds() {
+  const hop = document.getElementById("hopSound");
+  const cat = document.getElementById("catSound");
+
+  hop.pause();
+  hop.currentTime = 0;
+
+  cat.pause();
+  cat.currentTime = 0;
+}
+
+  function reveal() {
+  const cake = document.getElementById("cake");
+  const cat = document.getElementById("hideCat");
+  const you = document.getElementById("hideYou");
+
+  // إظهار الشخصيات تدريجيًا
+  setTimeout(() => {
+    cat.classList.remove("hidden");
+    you.classList.remove("hidden");
+    cat.style.transform = "translateY(0px)";
+    you.style.transform = "translateY(0px)";
+  }, 300);
+
+  // إيقاف صوت hop + cat عند الكشف
+  stopCharacterSounds();
+
+  // تشغيل صوت الاحتفال مرة واحدة
+  const party = document.getElementById("partySound");
+  party.play();
+
+  // بعد مدة قصيرة ننتقل للصفحة الأخيرة
+  setTimeout(() => {
+    nextPage();
+    launchBalloons();
+  }, 2500);
+}
+
+
+  
 </script>
 
 </body>
 </html>
+
 
 
